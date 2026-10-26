@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Church Street Vendor App</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Outfit:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Telugu:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&display=swap">
+<style>
+:root{--bg:#F6EEDF;--card:#FFFAF0;--ink:#2E1D17;--mute:#6B5547;--line:#E3D3B8;--o:#F2A62E;--p:#C4707F;--g:#8A9A5E;--b:#E3C99B;--n:#0A2160;--road:#FFFAF0;--blk:#EBDDC2;--park:#C9D3A8;--acc:var(--p);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1E1511;--card:#2A1D17;--ink:#F6EBDD;--mute:#CDB9A5;--line:#4A372D;--road:#4A372D;--blk:#33241D;--park:#3A4226}}
+:root[data-theme="dark"]{--bg:#1E1511;--card:#2A1D17;--ink:#F6EBDD;--mute:#CDB9A5;--line:#4A372D;--road:#4A372D;--blk:#33241D;--park:#3A4226}
+#app[data-role=v]{--acc:var(--g)}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.4 Outfit,system-ui,sans-serif;display:flex;justify-content:center;align-items:center;padding:12px}
+h1,h2,h3,.h{font-family:Montserrat,system-ui,sans-serif;margin:0}
+.app{position:relative;width:100%;max-width:400px;height:min(820px,100%);background:var(--bg);border:1px solid var(--line);border-radius:26px;overflow:hidden;display:flex;flex-direction:column}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 6px}
+.logo{font:800 15px Montserrat,sans-serif}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px;gap:2px}
+.seg button{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--ink);border-radius:99px;padding:3px 10px 3px 3px;font:600 12px Outfit;cursor:pointer}
+.seg button.on{background:var(--acc);color:#2E1D17}
+.seg svg{width:30px;height:30px;flex:none}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+.scroll{flex:1;overflow:auto;padding:4px 14px 14px}
+.nav{display:flex;border-top:1px solid var(--line);background:var(--card)}
+.nav button{flex:1;border:0;background:none;color:var(--mute);padding:8px 0 9px;font:500 11px Outfit;cursor:pointer;position:relative}
+.nav button.on{color:var(--ink);font-weight:600}
+.nav .n{position:absolute;top:3px;right:22%;background:var(--p);color:#2E1D17;border-radius:99px;font-size:10px;padding:0 5px}
+.in{width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 12px;font:14px Outfit}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:8px 14px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:5px 12px;font:500 12px Outfit;white-space:nowrap;cursor:pointer}
+.chip.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.mw{flex:1;min-height:0;position:relative}
+#ms{height:100%;overflow:auto}svg{display:block;width:100%;height:auto}
+.pin{cursor:pointer}.dim{opacity:.2;pointer-events:none}.cp{cursor:pointer}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:14px;transform:translateY(105%);transition:transform .25s;box-shadow:0 -8px 24px rgba(0,0,0,.15);max-height:75%;overflow:auto}
+.sheet.show{transform:none}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px}
+.badge{display:inline-block;font:600 11px Outfit;padding:3px 9px;border-radius:99px;color:#fff}
+.btn{border:0;background:var(--o);color:#2E1D17;border-radius:11px;padding:9px 13px;font:600 13px Outfit;cursor:pointer}
+.btn.g{background:none;border:1px solid var(--line);color:var(--ink)}.btn:disabled{opacity:.4}
+.x{border:0;background:none;color:var(--mute);font-size:22px;cursor:pointer;line-height:1}
+.ph{object-fit:cover;border-radius:12px;display:block}
+.ph0{border-radius:12px;background:var(--b);color:#2E1D17;display:flex;align-items:center;justify-content:center;font:800 28px Montserrat}
+.kv{display:grid;grid-template-columns:70px 1fr;gap:3px 8px;margin:10px 0;font-size:13px}.kv span:nth-child(odd){color:var(--mute)}
+.mod{position:absolute;inset:0;background:rgba(5,8,30,.55);display:flex;align-items:flex-end;z-index:5}
+.mc{background:var(--card);width:100%;border-radius:18px 18px 0 0;padding:14px;max-height:100%;overflow:auto}
+.q{display:flex;align-items:center;gap:8px}.q button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:16px;cursor:pointer}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:500 14px Outfit;cursor:pointer}
+.opt.on{border:2px solid var(--o)}
+.mute{color:var(--mute);font-size:12px}.st{width:46px;height:46px;border-radius:50%;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:20px}.st.on{border:2px solid var(--g);background:var(--g);color:#2E1D17}
+.bar2{height:8px;border-radius:9px;background:var(--line);overflow:hidden}.bar2 i{display:block;height:100%;background:var(--o)}
+.hero{display:flex;gap:12px;align-items:center;margin:2px 14px 6px;padding:8px 12px;border-radius:18px;background:color-mix(in srgb,var(--acc) 24%,var(--card));border:2px solid var(--acc)}
+.hero svg{width:52px;height:52px;flex:none}.hero b{font:800 16px Montserrat,sans-serif}
+.gear{border:1px solid var(--line);background:var(--card);color:var(--ink);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.pill{display:flex;justify-content:center;align-items:center;height:28px;width:44px;margin:0 auto 2px;border-radius:99px}.nav button.on .pill{background:var(--acc);color:#2E1D17}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.arch{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border:2px solid var(--line);border-radius:20px;background:var(--card);color:var(--ink);cursor:pointer;font:14px Outfit}
+.arch.on{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 22%,var(--card))}.big svg{width:84px;height:84px}
+.lb{display:block;margin:12px 0 4px;font-weight:600;font-size:13px}.tg{display:flex;gap:6px}.tg button{flex:1}
+.sw{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.sw i{width:40px;height:22px;border-radius:99px;background:var(--line);position:relative;display:block}.sw i::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--card);transition:.15s}.sw.on i{background:var(--g)}.sw.on i::after{left:21px}
+:root{--sf:"Noto Sans Devanagari","Noto Sans Kannada","Noto Sans Tamil","Noto Sans Telugu","Noto Sans Bengali",system-ui,sans-serif}
+body,button,input,select,.badge,.chip,.opt,.arch,.btn,.in,.seg button,.nav button{font-family:Outfit,var(--sf)}
+h1,h2,h3,.h,.logo,.hero b{font-family:Montserrat,var(--sf)}
+</style></head><body><div class="app" id="app"></div>
+<script>
+/* >>> PASTE YOUR ORIGINAL LINE HERE, replacing the next line: var IMG={"jatin":"data:image/jpeg;base64,...", "tees":..., "raju":..., "hair":...}; */
+var IMG={};
+
+var MAP={sat:""}; /* satellite basemap: set to a static image URL or data URI of Church Street */
+var CAT={fruit:["Fruit","#8A9A5E"],snacks:["Snacks","#F2A62E"],accessories:["Accessories","#C4707F"],clothing:["Clothing","#0A2160"]};
+var ST={open:["Open today","#2f7d4f"],stock:["New stock","#0A2160"],closed:["Closed due to rain","#6b6b73"]};
+var V=[
+{id:"raju",n:"Raju's Fruit Cart",c:"fruit",x:89,y:139,s:"open",l:"Kannada, Hindi",u:"UPI accepted",d:"Opposite Coco's. Blue cart with a steel corn pot on top.",it:[["Cut papaya",40],["Pineapple cup",50],["Boiled corn",30],["Spiced ber",30]]},
+{id:"jatin",n:"Jatin's Stall",c:"accessories",x:150,y:200,s:"open",l:"Hindi, English, Kannada",u:"UPI accepted",d:"Next to the street art wall. Wooden stall, black tarp roof, red umbrellas.",it:[["Earrings",120],["Bangles set",200],["Chain",180]]},
+{id:"ravi",n:"Ravi's Chai & Buns",c:"snacks",x:155,y:255,s:"stock",l:"Kannada, Tamil",u:"UPI accepted",d:"Near Kling Brewery. Steel kettle cart, black awning.",it:[["Chai",15],["Bun maska",30],["Samosa",20]]},
+{id:"tees",n:"Salim's T-Shirt Stall",c:"clothing",x:216,y:314,s:"open",l:"Hindi, Urdu, English",u:"Ask the vendor",d:"By the green-painted gate. Two big green umbrellas.",it:[["T-shirt",250],["3 T-shirts",600]]},
+{id:"chaat",n:"Chaat Corner",c:"snacks",x:221,y:372,s:"open",l:"Hindi, Kannada",u:"UPI accepted",d:"Near the Museum Road end. Red cart with a painted menu.",it:[["Pani puri",40],["Bhel",50]]},
+{id:"hair",n:"Priya's Hair Accessories",c:"accessories",x:282,y:431,s:"open",l:"Hindi, English",u:"UPI accepted",d:"Near St. Marks Road. Huge red umbrella over a blue cart.",it:[["Claw clip",60],["Scrunchie",30],["Flower clip",40]]}];
+var st={done:false,lang:"en",theme:"system",sat:false,saved:[],notif:{open:1,deals:1,tags:1,demand:1},role:"x",tab:"map",f:"all",q:"",sel:null,mod:null,qty:[],res:[],stamps:[],
+reqs:[{t:"Tote bags with Kannada prints",n:8},{t:"Rain ponchos",n:11},{t:"Phone charger cables",n:5},{t:"Marigold garlands",n:3}],
+P:[{id:1,v:"raju",h:"@bangalore.bites",c:"Fresh cut papaya and spicy ber right by Coco's. Look for the blue cart!",s:"ok"},{id:2,v:"jatin",h:"@thrifty.nandini",c:"Jewellery haul under the glass building. Look for the red umbrellas.",s:"ok"},{id:3,v:"tees",h:"@sunday.walks.blr",c:"Buy 3 tees for ₹600. Green umbrellas by the gate.",s:"ok"},{id:4,v:"hair",h:"@hairhaul.blr",c:"Claw clips for days. You can't miss the red umbrella.",s:"ok"},{id:5,v:"jatin",h:"@jewel.junkie",c:"Silver jhumkas at Jatin's. Wooden stall, black tarp roof.",s:"pend"},{id:6,v:"jatin",h:"@styleby.meera",c:"Best bangles on the street, hands down.",s:"pend"}],
+D:[{v:"raju",i:"Cut fruit cup",o:50,d:30,q:6,t:"9 pm"},{v:"ravi",i:"Samosas (2)",o:20,d:12,q:8,t:"9 pm"}]};
+var TR=["raju","jatin","tees"],$=function(s){return document.querySelector(s)};
+var vend=function(id){return V.filter(function(v){return v.id===id})[0]};
+var appr=function(id){return st.P.filter(function(p){return p.v===id&&p.s==="ok"})[0]};
+var e=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+
+/* ---------- translations: [hi, kn, ta, te, bn, mr] ---------- */
+var LG=[["en","English"],["hi","\u0939\u093f\u0928\u094d\u0926\u0940"],["kn","\u0c95\u0ca8\u0ccd\u0ca8\u0ca1"],["ta","\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"],["te","\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41"],["bn","\u09ac\u09be\u0982\u09b2\u09be"],["mr","\u092e\u0930\u093e\u0920\u0940"]];
+var LI={hi:0,kn:1,ta:2,te:3,bn:4,mr:5};
+var TT={
+"Map":["मानचित्र","ನಕ್ಷೆ","வரைபடம்","మ్యాప్","মানচিত্র","नकाशा"],
+"Trail":["ट्रेल","ಹಾದಿ","பாதை","మార్గం","ট্রেইল","ट्रेल"],
+"Deals":["ऑफ़र","ಆಫರ್","சலுகை","ఆఫర్లు","অফার","ऑफर"],
+"Ask":["पूछें","ಕೇಳಿ","கேளுங்கள்","అడగండి","জিজ্ঞাসা","विचारा"],
+"Creators":["क्रिएटर","ಕ್ರಿಯೇಟರ್","படைப்பாளர்","క్రియేటర్లు","ক্রিয়েটর","क्रिएटर"],
+"My stall":["मेरी दुकान","ನನ್ನ ಅಂಗಡಿ","என் கடை","నా దుకాణం","আমার দোকান","माझे दुकान"],
+"Tags":["टैग","ಟ್ಯಾಗ್","குறிச்சொல்","ట్యాగ్‌లు","ট্যাগ","टॅग"],
+"Demand":["माँग","ಬೇಡಿಕೆ","தேவை","డిమాండ్","চাহিদা","मागणी"],
+"Church Street":["चर्च स्ट्रीट","ಚರ್ಚ್ ಸ್ಟ್ರೀಟ್","சர்ச் ஸ்ட்ரீட்","చర్చ్ స్ట్రీట్","চার্চ স্ট্রিট","चर्च स्ट्रीट"],
+"Map of Church Street":["चर्च स्ट्रीट का मानचित्र","ಚರ್ಚ್ ಸ್ಟ್ರೀಟ್ ನಕ್ಷೆ","சர்ச் ஸ்ட்ரீட் வரைபடம்","చర్చ్ స్ట్రీట్ మ్యాప్","চার্চ স্ট্রিটের মানচিত্র","चर्च स्ट्रीटचा नकाशा"],
+"Welcome to Church Street":["चर्च स्ट्रीट में आपका स्वागत है","ಚರ್ಚ್ ಸ್ಟ್ರೀಟ್‌ಗೆ ಸ್ವಾಗತ","சர்ச் ஸ்ட்ரீட்டுக்கு வரவேற்கிறோம்","చర్చ్ స్ట్రీట్‌కు స్వాగతం","চার্চ স্ট্রিটে স্বাগতম","चर्च स्ट्रीटमध्ये आपले स्वागत आहे"],
+"Pick who you are. You can switch any time.":["चुनें कि आप कौन हैं। आप कभी भी बदल सकते हैं।","ನೀವು ಯಾರು ಎಂದು ಆಯ್ಕೆಮಾಡಿ. ಯಾವಾಗ ಬೇಕಾದರೂ ಬದಲಾಯಿಸಬಹುದು.","நீங்கள் யார் என்பதைத் தேர்வு செய்யுங்கள். எப்போது வேண்டுமானாலும் மாற்றலாம்.","మీరు ఎవరో ఎంచుకోండి. ఎప్పుడైనా మార్చుకోవచ్చు.","আপনি কে তা বেছে নিন। যেকোনো সময় বদলাতে পারবেন।","तुम्ही कोण आहात ते निवडा. केव्हाही बदलू शकता."],
+"Explorer":["एक्सप्लोरर","ಎಕ್ಸ್‌ಪ್ಲೋರರ್","எக்ஸ்ப்ளோரர்","ఎక్స్‌ప్లోరర్","এক্সপ্লোরার","एक्सप्लोरर"],
+"Rescuer":["रेस्क्यूअर","ರೆಸ್ಕ್ಯೂಯರ್","ரெஸ்க்யூயர்","రెస్క్యూయర్","রেসকিউয়ার","रेस्क्यूअर"],
+"I discover stalls and products":["दुकानें और सामान खोजें","ಅಂಗಡಿ ಮತ್ತು ಉತ್ಪನ್ನಗಳನ್ನು ಹುಡುಕಿ","கடைகளையும் பொருட்களையும் தேடுங்கள்","దుకాణాలు, ఉత్పత్తులను కనుగొనండి","দোকান ও পণ্য খুঁজুন","दुकाने आणि वस्तू शोधा"],
+"I run a stall":["अपनी दुकान चलाएँ","ನಾನು ಅಂಗಡಿ ನಡೆಸುತ್ತೇನೆ","நான் கடை நடத்துகிறேன்","నేను దుకాణం నడుపుతున్నాను","আমি দোকান চালাই","स्वतःचे दुकान चालवा"],
+"Discover stalls, products and creators":["दुकानें, सामान और क्रिएटर खोजें","ಅಂಗಡಿ, ಉತ್ಪನ್ನ ಮತ್ತು ಕ್ರಿಯೇಟರ್‌ಗಳನ್ನು ಹುಡುಕಿ","கடைகள், பொருட்கள், படைப்பாளர்களைக் கண்டறியுங்கள்","దుకాణాలు, ఉత్పత్తులు, క్రియేటర్లను కనుగొనండి","দোকান, পণ্য ও ক্রিয়েটর খুঁজুন","दुकाने, वस्तू आणि क्रिएटर शोधा"],
+"Run your stall, on your terms":["अपनी दुकान, अपनी शर्तों पर चलाएँ","ನಿಮ್ಮ ಅಂಗಡಿ, ನಿಮ್ಮ ಷರತ್ತುಗಳಲ್ಲಿ ನಡೆಸಿ","உங்கள் கடையை உங்கள் விதிகளில் நடத்துங்கள்","మీ దుకాణం, మీ షరతులపై నడపండి","নিজের দোকান, নিজের শর্তে চালান","तुमचे दुकान, तुमच्या अटींवर चालवा"],
+"Language":["भाषा","ಭಾಷೆ","மொழி","భాష","ভাষা","भाषा"],
+"Appearance":["दिखावट","ಗೋಚರತೆ","தோற்றம்","రూపం","চেহারা","स्वरूप"],
+"Light":["हल्का","ಬೆಳಕು","வெளிச்சம்","లైట్","হালকা","फिकट"],
+"Dark":["गहरा","ಕತ್ತಲೆ","இருள்","డార్క్","গাঢ়","गडद"],
+"System":["सिस्टम","ಸಿಸ್ಟಮ್","சிஸ்டம்","సిస్టమ్","সিস্টেম","सिस्टम"],
+"Your stall":["आपकी दुकान","ನಿಮ್ಮ ಅಂಗಡಿ","உங்கள் கடை","మీ దుకాణం","আপনার দোকান","तुमचे दुकान"],
+"Stall name":["दुकान का नाम","ಅಂಗಡಿಯ ಹೆಸರು","கடையின் பெயர்","దుకాణం పేరు","দোকানের নাম","दुकानाचे नाव"],
+"What you sell":["आप क्या बेचते हैं","ನೀವು ಏನು ಮಾರುತ್ತೀರಿ","நீங்கள் என்ன விற்கிறீர்கள்","మీరు ఏమి అమ్ముతారు","আপনি কী বিক্রি করেন","तुम्ही काय विकता"],
+"Products and prices":["सामान और कीमतें","ಉತ್ಪನ್ನಗಳು ಮತ್ತು ಬೆಲೆಗಳು","பொருட்களும் விலைகளும்","ఉత్పత్తులు మరియు ధరలు","পণ্য ও দাম","वस्तू आणि किमती"],
+"Start":["शुरू करें","ಪ್ರಾರಂಭಿಸಿ","தொடங்கு","ప్రారంభించు","শুরু করুন","सुरू करा"],
+"All":["सभी","ಎಲ್ಲಾ","அனைத்தும்","అన్నీ","সব","सर्व"],
+"Fruit":["फल","ಹಣ್ಣು","பழம்","పండ్లు","ফল","फळे"],
+"Snacks":["नाश्ता","ತಿಂಡಿ","சிற்றுண்டி","స్నాక్స్","নাস্তা","खाऊ"],
+"Accessories":["एक्सेसरीज़","ಪರಿಕರಗಳು","அணிகலன்கள்","యాక్సెసరీలు","অ্যাক্সেসরিজ","अॅक्सेसरीज"],
+"Clothing":["कपड़े","ಬಟ್ಟೆ","ஆடைகள்","దుస్తులు","পোশাক","कपडे"],
+"Open today":["आज खुला है","ಇಂದು ತೆರೆದಿದೆ","இன்று திறந்துள்ளது","ఈ రోజు తెరిచి ఉంది","আজ খোলা","आज उघडे आहे"],
+"New stock":["नया स्टॉक","ಹೊಸ ಸ್ಟಾಕ್","புதிய இருப்பு","కొత్త స్టాక్","নতুন স্টক","नवीन माल"],
+"Closed due to rain":["बारिश के कारण बंद","ಮಳೆಯಿಂದ ಮುಚ್ಚಲಾಗಿದೆ","மழையால் மூடப்பட்டுள்ளது","వర్షం వల్ల మూసివేశారు","বৃষ্টির কারণে বন্ধ","पावसामुळे बंद"],
+"UPI accepted":["UPI स्वीकार्य","UPI ಸ್ವೀಕರಿಸಲಾಗುತ್ತದೆ","UPI ஏற்கப்படும்","UPI అంగీకరిస్తారు","UPI নেওয়া হয়","UPI स्वीकारले जाते"],
+"Ask the vendor":["विक्रेता से पूछें","ವ್ಯಾಪಾರಿಯನ್ನು ಕೇಳಿ","வியாபாரியிடம் கேளுங்கள்","వ్యాపారిని అడగండి","বিক্রেতাকে জিজ্ঞাসা করুন","विक्रेत्याला विचारा"],
+"Kannada":["कन्नड़","ಕನ್ನಡ","கன்னடம்","కన్నడ","কন্নড়","कन्नड"],
+"Hindi":["हिन्दी","ಹಿಂದಿ","இந்தி","హిందీ","হিন্দি","हिंदी"],
+"English":["अंग्रेज़ी","ಇಂಗ್ಲಿಷ್","ஆங்கிலம்","ఇంగ్లీష్","ইংরেজি","इंग्रजी"],
+"Tamil":["तमिल","ತಮಿಳು","தமிழ்","తమిళం","তামিল","तमिळ"],
+"Urdu":["उर्दू","ಉರ್ದು","உருது","ఉర్దూ","উর্দু","उर्दू"],
+"Settings":["सेटिंग्स","ಸೆಟ್ಟಿಂಗ್‌ಗಳು","அமைப்புகள்","సెట్టింగ్‌లు","সেটিংস","सेटिंग्ज"],
+"Notifications":["सूचनाएँ","ಅಧಿಸೂಚನೆಗಳು","அறிவிப்புகள்","నోటిఫికేషన్లు","বিজ্ঞপ্তি","सूचना"],
+"Saved stalls open":["सहेजी दुकानें खुलीं","ಉಳಿಸಿದ ಅಂಗಡಿಗಳು ತೆರೆದಾಗ","சேமித்த கடைகள் திறந்தால்","సేవ్ చేసిన దుకాణాలు తెరిచినప్పుడు","সংরক্ষিত দোকান খুললে","जतन केलेली दुकाने उघडल्यावर"],
+"Deals near me":["मेरे पास के ऑफ़र","ನನ್ನ ಹತ್ತಿರದ ಆಫರ್‌ಗಳು","அருகிலுள்ள சலுகைகள்","నా దగ్గరి ఆఫర్లు","কাছাকাছি অফার","माझ्या जवळचे ऑफर"],
+"New creator tags":["नए क्रिएटर टैग","ಹೊಸ ಕ್ರಿಯೇಟರ್ ಟ್ಯಾಗ್‌ಗಳು","புதிய படைப்பாளர் குறிச்சொற்கள்","కొత్త క్రియేటర్ ట్యాగ్‌లు","নতুন ক্রিয়েটর ট্যাগ","नवीन क्रिएटर टॅग"],
+"Demand matches":["माँग से मेल","ಬೇಡಿಕೆ ಹೊಂದಾಣಿಕೆ","தேவைக்கு பொருத்தம்","డిమాండ్ మ్యాచ్‌లు","চাহিদা মিলে গেলে","मागणीशी जुळणी"],
+"Saved on this device. Real alerts need a backend and a push service.":["इस डिवाइस पर सहेजा गया। असली अलर्ट के लिए बैकएंड और पुश सेवा चाहिए।","ಈ ಸಾಧನದಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ. ನಿಜವಾದ ಅಲರ್ಟ್‌ಗಳಿಗೆ ಬ್ಯಾಕೆಂಡ್ ಮತ್ತು ಪುಶ್ ಸೇವೆ ಬೇಕು.","இந்தச் சாதனத்தில் சேமிக்கப்பட்டது. உண்மையான அறிவிப்புகளுக்கு பேக்எண்டும் புஷ் சேவையும் தேவை.","ఈ పరికరంలో సేవ్ చేయబడింది. నిజమైన అలర్ట్‌లకు బ్యాకెండ్, పుష్ సర్వీస్ కావాలి.","এই ডিভাইসে সংরক্ষিত। আসল অ্যালার্টের জন্য ব্যাকএন্ড ও পুশ সার্ভিস লাগবে।","या डिव्हाइसवर जतन केले. खऱ्या अलर्टसाठी बॅकएंड आणि पुश सेवा लागेल."],
+"Saved vendors":["सहेजे गए विक्रेता","ಉಳಿಸಿದ ವ್ಯಾಪಾರಿಗಳು","சேமித்த வியாபாரிகள்","సేవ్ చేసిన వ్యాపారులు","সংরক্ষিত বিক্রেতা","जतन केलेले विक्रेते"],
+"View":["देखें","ನೋಡಿ","பார்","చూడండి","দেখুন","पहा"],
+"Tap the heart on a stall to save it.":["सहेजने के लिए दुकान पर दिल दबाएँ।","ಉಳಿಸಲು ಅಂಗಡಿಯ ಹೃದಯ ಚಿಹ್ನೆ ಒತ್ತಿ.","சேமிக்க கடையின் இதய ஐகானைத் தட்டுங்கள்.","సేవ్ చేయడానికి దుకాణంపై హృదయ చిహ్నాన్ని నొక్కండి.","সংরক্ষণ করতে দোকানের হার্ট চিহ্নে ট্যাপ করুন।","जतन करण्यासाठी दुकानावरील हार्ट दाबा."],
+"Order history":["ऑर्डर इतिहास","ಆರ್ಡರ್ ಇತಿಹಾಸ","ஆர்டர் வரலாறு","ఆర్డర్ చరిత్ర","অর্ডারের ইতিহাস","ऑर्डर इतिहास"],
+"Collected":["ले लिया गया","ಸ್ವೀಕರಿಸಲಾಗಿದೆ","பெற்றுக்கொள்ளப்பட்டது","తీసుకున్నారు","নেওয়া হয়েছে","घेतले"],
+"Reserved":["आरक्षित","ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ","முன்பதிவு","రిజర్వ్ చేశారు","সংরক্ষিত","राखीव"],
+"No orders yet.":["अभी कोई ऑर्डर नहीं।","ಇನ್ನೂ ಆರ್ಡರ್‌ಗಳಿಲ್ಲ.","இன்னும் ஆர்டர்கள் இல்லை.","ఇంకా ఆర్డర్లు లేవు.","এখনও কোনো অর্ডার নেই।","अजून ऑर्डर नाहीत."],
+"Redo setup":["सेटअप दोबारा करें","ಸೆಟಪ್ ಮರುಮಾಡಿ","அமைப்பை மீண்டும் செய்","సెటప్ మళ్లీ చేయండి","সেটআপ আবার করুন","सेटअप पुन्हा करा"],
+"Search a product, e.g. claw clips":["सामान खोजें, जैसे क्लॉ क्लिप","ಉತ್ಪನ್ನ ಹುಡುಕಿ, ಉದಾ. ಕ್ಲಾ ಕ್ಲಿಪ್","பொருளைத் தேடுங்கள், எ.கா. கிளா கிளிப்","ఉత్పత్తిని వెతకండి, ఉదా. క్లా క్లిప్","পণ্য খুঁজুন, যেমন ক্ল ক্লিপ","वस्तू शोधा, उदा. क्लॉ क्लिप"],
+"{0} of {1} stalls match":["{1} में से {0} दुकानें मेल खाती हैं","{1} ರಲ್ಲಿ {0} ಅಂಗಡಿಗಳು ಹೊಂದುತ್ತವೆ","{1} கடைகளில் {0} பொருந்துகின்றன","{1} దుకాణాలలో {0} సరిపోతున్నాయి","{1}টির মধ্যে {0}টি দোকান মিলেছে","{1} पैकी {0} दुकाने जुळतात"],
+"Satellite image not set up":["सैटेलाइट इमेज सेट नहीं है","ಉಪಗ್ರಹ ಚಿತ್ರ ಹೊಂದಿಸಿಲ್ಲ","செயற்கைக்கோள் படம் அமைக்கப்படவில்லை","శాటిలైట్ చిత్రం సెట్ చేయలేదు","স্যাটেলাইট ছবি সেট করা নেই","सॅटेलाइट प्रतिमा सेट केलेली नाही"],
+"Satellite":["सैटेलाइट","ಉಪಗ್ರಹ","செயற்கைக்கோள்","శాటిలైట్","স্যাটেলাইট","सॅटेलाइट"],
+"Sells":["बिकता है","ಮಾರಾಟ","விற்பனை","అమ్మకాలు","বিক্রি হয়","विक्री"],
+"Spot it":["पहचानें","ಗುರುತಿಸಿ","கண்டுபிடி","గుర్తించండి","চিনুন","ओळखा"],
+"Languages":["भाषाएँ","ಭಾಷೆಗಳು","மொழிகள்","భాషలు","ভাষা","भाषा"],
+"Pay":["भुगतान","ಪಾವತಿ","பணம்","చెల్లింపు","পেমেন্ট","पेमेंट"],
+"Reserve &amp; collect":["आरक्षित करें और लें","ಕಾಯ್ದಿರಿಸಿ ಮತ್ತು ಪಡೆಯಿರಿ","முன்பதிவு செய்து பெறுங்கள்","రిజర్వ్ చేసి తీసుకోండి","রিজার্ভ করে নিন","राखून घ्या"],
+"Creator post":["क्रिएटर पोस्ट","ಕ್ರಿಯೇಟರ್ ಪೋಸ್ಟ್","படைப்பாளர் பதிவு","క్రియేటర్ పోస్ట్","ক্রিয়েটর পোস্ট","क्रिएटर पोस्ट"],
+"Save vendor":["विक्रेता सहेजें","ವ್ಯಾಪಾರಿಯನ್ನು ಉಳಿಸಿ","வியாபாரியைச் சேமி","వ్యాపారిని సేవ్ చేయండి","বিক্রেতা সংরক্ষণ করুন","विक्रेता जतन करा"],
+"Close":["बंद करें","ಮುಚ್ಚಿ","மூடு","మూసివేయండి","বন্ধ করুন","बंद करा"],
+"Vendor Trail":["विक्रेता ट्रेल","ವ್ಯಾಪಾರಿ ಹಾದಿ","வியாபாரிகள் பாதை","వ్యాపారుల మార్గం","বিক্রেতা ট্রেইল","विक्रेता ट्रेल"],
+"Coco’s café → three stalls → the bookshop. Check in at each stall to collect a stamp.":["कोको’ज़ कैफ़े → तीन दुकानें → बुकशॉप। स्टैम्प पाने के लिए हर दुकान पर चेक-इन करें।","ಕೋಕೋಸ್ ಕೆಫೆ → ಮೂರು ಅಂಗಡಿಗಳು → ಪುಸ್ತಕದ ಅಂಗಡಿ. ಸ್ಟ್ಯಾಂಪ್ ಪಡೆಯಲು ಪ್ರತಿ ಅಂಗಡಿಯಲ್ಲಿ ಚೆಕ್-ಇನ್ ಮಾಡಿ.","கோகோஸ் கஃபே → மூன்று கடைகள் → புத்தகக் கடை. முத்திரை பெற ஒவ்வொரு கடையிலும் செக்-இன் செய்யுங்கள்.","కోకోస్ కేఫ్ → మూడు దుకాణాలు → పుస్తకాల దుకాణం. స్టాంప్ పొందడానికి ప్రతి దుకాణంలో చెక్-ఇన్ చేయండి.","কোকোস ক্যাফে → তিনটি দোকান → বইয়ের দোকান। স্ট্যাম্প পেতে প্রতিটি দোকানে চেক-ইন করুন।","कोकोज कॅफे → तीन दुकाने → पुस्तकाचे दुकान. स्टॅम्प मिळवण्यासाठी प्रत्येक दुकानात चेक-इन करा."],
+"{0} of 3 stamps":["3 में से {0} स्टैम्प","3 ರಲ್ಲಿ {0} ಸ್ಟ್ಯಾಂಪ್","3 இல் {0} முத்திரைகள்","3 లో {0} స్టాంపులు","3টির মধ্যে {0}টি স্ট্যাম্প","3 पैकी {0} स्टॅम्प"],
+"Reward at 3":["3 पर इनाम","3ರಲ್ಲಿ ಬಹುಮಾನ","3 இல் பரிசு","3 వద్ద బహుమతి","3-এ পুরস্কার","3 वर बक्षीस"],
+"Unlocked: ₹30 off at Ravi’s Chai &amp; Buns":["अनलॉक: रवि’ज़ चाय और बन्स पर ₹30 की छूट","ಅನ್‌ಲಾಕ್: ರವಿಯ ಚಾಯ್ ಮತ್ತು ಬನ್ಸ್‌ನಲ್ಲಿ ₹30 ರಿಯಾಯಿತಿ","திறக்கப்பட்டது: ரவியின் சாய் & பன்ஸில் ₹30 தள்ளுபடி","అన్‌లాక్: రవి చాయ్ & బన్స్‌లో ₹30 తగ్గింపు","আনলক: রবির চা ও বান্সে ₹30 ছাড়","अनलॉक: रविच्या चहा आणि बन्सवर ₹30 सूट"],
+"Funded together by trail vendors (sample reward)":["ट्रेल के विक्रेताओं द्वारा मिलकर दिया गया (नमूना इनाम)","ಹಾದಿಯ ವ್ಯಾಪಾರಿಗಳು ಒಟ್ಟಾಗಿ ನೀಡಿದ್ದು (ಮಾದರಿ ಬಹುಮಾನ)","பாதையிலுள்ள வியாபாரிகள் சேர்ந்து வழங்குவது (மாதிரி பரிசு)","ట్రైల్‌లోని వ్యాపారులు కలిసి ఇచ్చేది (నమూనా బహుమతి)","ট্রেইলের বিক্রেতারা মিলে দিয়েছেন (নমুনা পুরস্কার)","ट्रेलमधील विक्रेत्यांनी मिळून दिलेले (नमुना बक्षीस)"],
+"Visit all three stalls to unlock a vendor-funded reward.":["विक्रेताओं के इनाम के लिए तीनों दुकानों पर जाएँ।","ವ್ಯಾಪಾರಿಗಳ ಬಹುಮಾನ ಪಡೆಯಲು ಮೂರೂ ಅಂಗಡಿಗಳಿಗೆ ಭೇಟಿ ನೀಡಿ.","வியாபாரிகள் வழங்கும் பரிசைப் பெற மூன்று கடைகளுக்கும் செல்லுங்கள்.","వ్యాపారుల బహుమతి పొందడానికి మూడు దుకాణాలనూ సందర్శించండి.","বিক্রেতাদের পুরস্কার পেতে তিনটি দোকানেই যান।","विक्रेत्यांचे बक्षीस मिळवण्यासाठी तिन्ही दुकानांना भेट द्या."],
+"Check in":["चेक-इन करें","ಚೆಕ್-ಇನ್","செக்-இன்","చెక్-ఇన్","চেক-ইন","चेक-इन"],
+"Reset stamps":["स्टैम्प रीसेट करें","ಸ್ಟ್ಯಾಂಪ್ ಮರುಹೊಂದಿಸಿ","முத்திரைகளை மீட்டமை","స్టాంపులు రీసెట్ చేయండి","স্ট্যাম্প রিসেট করুন","स्टॅम्प रीसेट करा"],
+"End-of-day deals":["दिन के अंत के ऑफ़र","ದಿನದ ಕೊನೆಯ ಆಫರ್‌ಗಳು","நாள் முடிவு சலுகைகள்","రోజు చివరి ఆఫర్లు","দিনের শেষের অফার","दिवसअखेरचे ऑफर"],
+"Leftover stock at a discount, posted by vendors. Reserve it and collect at the stall.":["बचा हुआ माल छूट पर, विक्रेताओं द्वारा पोस्ट किया गया। आरक्षित करें और दुकान से लें।","ವ್ಯಾಪಾರಿಗಳು ಹಾಕಿದ ಉಳಿದ ಸರಕು ರಿಯಾಯಿತಿಯಲ್ಲಿ. ಕಾಯ್ದಿರಿಸಿ ಮತ್ತು ಅಂಗಡಿಯಲ್ಲಿ ಪಡೆಯಿರಿ.","வியாபாரிகள் பதிவிட்ட மீதமுள்ள பொருட்கள் தள்ளுபடியில். முன்பதிவு செய்து கடையில் பெறுங்கள்.","వ్యాపారులు పోస్ట్ చేసిన మిగిలిన సరుకు తగ్గింపుతో. రిజర్వ్ చేసి దుకాణంలో తీసుకోండి.","বিক্রেতাদের দেওয়া বাড়তি মাল ছাড়ে। রিজার্ভ করে দোকানে নিন।","विक्रेत्यांनी टाकलेला उरलेला माल सवलतीत. राखून ठेवा आणि दुकानातून घ्या."],
+"until {0}":["{0} तक","{0} ವರೆಗೆ","{0} வரை","{0} వరకు","{0} পর্যন্ত","{0} पर्यंत"],
+"{0} left":["{0} बचे","{0} ಉಳಿದಿವೆ","{0} மீதம்","{0} మిగిలి ఉన్నాయి","{0}টি বাকি","{0} शिल्लक"],
+"Reserve":["आरक्षित करें","ಕಾಯ್ದಿರಿಸಿ","முன்பதிவு","రిజర్వ్","রিজার্ভ","राखून ठेवा"],
+"No deals right now.":["अभी कोई ऑफ़र नहीं।","ಈಗ ಯಾವುದೇ ಆಫರ್ ಇಲ್ಲ.","இப்போது சலுகைகள் இல்லை.","ఇప్పుడు ఆఫర్లు లేవు.","এখন কোনো অফার নেই।","सध्या ऑफर नाहीत."],
+"Demand board":["माँग बोर्ड","ಬೇಡಿಕೆ ಫಲಕ","தேவை பலகை","డిమాండ్ బోర్డ్","চাহিদা বোর্ড","मागणी फलक"],
+"Can’t find something? Ask. Vendors see it and can stock it.":["कुछ नहीं मिल रहा? पूछें। विक्रेता देखकर उसे रख सकते हैं।","ಏನಾದರೂ ಸಿಗುತ್ತಿಲ್ಲವೇ? ಕೇಳಿ. ವ್ಯಾಪಾರಿಗಳು ನೋಡಿ ಸ್ಟಾಕ್ ಮಾಡಬಹುದು.","ஏதாவது கிடைக்கவில்லையா? கேளுங்கள். வியாபாரிகள் பார்த்து வாங்கி வைக்கலாம்.","ఏదైనా దొరకలేదా? అడగండి. వ్యాపారులు చూసి స్టాక్ చేయవచ్చు.","কিছু খুঁজে পাচ্ছেন না? জিজ্ঞাসা করুন। বিক্রেতারা দেখে স্টক করতে পারেন।","काही सापडत नाही? विचारा. विक्रेते पाहून ठेवू शकतात."],
+"I am looking for...":["मुझे चाहिए...","ನನಗೆ ಬೇಕಾಗಿದೆ...","எனக்கு வேண்டும்...","నాకు కావాలి...","আমি খুঁজছি...","मला हवे आहे..."],
+"Post":["पोस्ट करें","ಪೋಸ್ಟ್","பதிவிடு","పోస్ట్","পোস্ট","पोस्ट करा"],
+"Stocked by {0}":["{0} के पास उपलब्ध","{0} ಬಳಿ ಲಭ್ಯ","{0} இடம் உள்ளது","{0} వద్ద అందుబాటులో ఉంది","{0}-এর কাছে আছে","{0} कडे उपलब्ध"],
+"Posts tagged to stalls. Only tags the vendor approved show up here.":["दुकानों से टैग किए गए पोस्ट। यहाँ सिर्फ़ विक्रेता द्वारा मंज़ूर टैग दिखते हैं।","ಅಂಗಡಿಗಳಿಗೆ ಟ್ಯಾಗ್ ಮಾಡಿದ ಪೋಸ್ಟ್‌ಗಳು. ವ್ಯಾಪಾರಿ ಅನುಮೋದಿಸಿದ ಟ್ಯಾಗ್‌ಗಳು ಮಾತ್ರ ಇಲ್ಲಿ ಕಾಣುತ್ತವೆ.","கடைகளுக்கு குறிக்கப்பட்ட பதிவுகள். வியாபாரி ஒப்புக்கொண்ட குறிச்சொற்கள் மட்டுமே இங்கே தெரியும்.","దుకాణాలకు ట్యాగ్ చేసిన పోస్టులు. వ్యాపారి ఆమోదించిన ట్యాగ్‌లు మాత్రమే ఇక్కడ కనిపిస్తాయి.","দোকানে ট্যাগ করা পোস্ট। শুধু বিক্রেতার অনুমোদিত ট্যাগ এখানে দেখা যায়।","दुकानांना टॅग केलेल्या पोस्ट. फक्त विक्रेत्याने मंजूर केलेले टॅग येथे दिसतात."],
+"Find {0} on the map":["{0} को मानचित्र पर खोजें","{0} ಅನ್ನು ನಕ್ಷೆಯಲ್ಲಿ ಹುಡುಕಿ","{0} ஐ வரைபடத்தில் தேடுங்கள்","{0} ను మ్యాప్‌లో కనుగొనండి","{0} মানচিত্রে খুঁজুন","{0} नकाशावर शोधा"],
+"You control your status and how your stall appears":["आपकी स्थिति और दुकान कैसी दिखे, यह आप तय करते हैं","ನಿಮ್ಮ ಸ್ಥಿತಿ ಮತ್ತು ಅಂಗಡಿ ಹೇಗೆ ಕಾಣಬೇಕು ಎಂಬುದನ್ನು ನೀವೇ ನಿರ್ಧರಿಸುತ್ತೀರಿ","உங்கள் நிலையையும் கடை எப்படித் தெரிய வேண்டும் என்பதையும் நீங்களே தீர்மானிக்கிறீர்கள்","మీ స్థితి, మీ దుకాణం ఎలా కనిపించాలో మీరే నిర్ణయిస్తారు","আপনার অবস্থা এবং দোকান কেমন দেখাবে তা আপনিই ঠিক করেন","तुमची स्थिती आणि दुकान कसे दिसावे हे तुम्हीच ठरवता"],
+"Status":["स्थिति","ಸ್ಥಿತಿ","நிலை","స్థితి","অবস্থা","स्थिती"],
+"Post end-of-day surplus":["दिन के अंत का बचा माल पोस्ट करें","ದಿನದ ಕೊನೆಯ ಉಳಿದ ಸರಕು ಪೋಸ್ಟ್ ಮಾಡಿ","நாள் முடிவில் மீதமுள்ளதை பதிவிடுங்கள்","రోజు చివర మిగిలిన సరుకును పోస్ట్ చేయండి","দিনের শেষের বাড়তি মাল পোস্ট করুন","दिवसअखेरचा उरलेला माल पोस्ट करा"],
+"Item":["सामान","ಐಟಂ","பொருள்","వస్తువు","পণ্য","वस्तू"],
+"Post deal":["ऑफ़र पोस्ट करें","ಆಫರ್ ಪೋಸ್ಟ್ ಮಾಡಿ","சலுகையை பதிவிடு","ఆఫర్ పోస్ట్ చేయండి","অফার পোস্ট করুন","ऑफर पोस्ट करा"],
+"Reservations ({0})":["आरक्षण ({0})","ಕಾಯ್ದಿರಿಸುವಿಕೆಗಳು ({0})","முன்பதிவுகள் ({0})","రిజర్వేషన్లు ({0})","রিজার্ভেশন ({0})","राखीव ({0})"],
+"No reservations yet. Try reserving from the Explorer side.":["अभी कोई आरक्षण नहीं। एक्सप्लोरर की ओर से आरक्षित करके देखें।","ಇನ್ನೂ ಕಾಯ್ದಿರಿಸುವಿಕೆ ಇಲ್ಲ. ಎಕ್ಸ್‌ಪ್ಲೋರರ್ ಕಡೆಯಿಂದ ಕಾಯ್ದಿರಿಸಿ ನೋಡಿ.","இன்னும் முன்பதிவுகள் இல்லை. எக்ஸ்ப்ளோரர் பக்கத்தில் முன்பதிவு செய்து பாருங்கள்.","ఇంకా రిజర్వేషన్లు లేవు. ఎక్స్‌ప్లోరర్ వైపు నుండి రిజర్వ్ చేసి చూడండి.","এখনও কোনো রিজার্ভেশন নেই। এক্সপ্লোরার দিক থেকে রিজার্ভ করে দেখুন।","अजून राखीव नाही. एक्सप्लोरर बाजूने राखून पहा."],
+"Creator tags":["क्रिएटर टैग","ಕ್ರಿಯೇಟರ್ ಟ್ಯಾಗ್‌ಗಳು","படைப்பாளர் குறிச்சொற்கள்","క్రియేటర్ ట్యాగ్‌లు","ক্রিয়েটর ট্যাগ","क्रिएटर टॅग"],
+"Creators ask before tagging your stall. You decide what appears on the map.":["क्रिएटर आपकी दुकान टैग करने से पहले पूछते हैं। मानचित्र पर क्या दिखे, आप तय करते हैं।","ಕ್ರಿಯೇಟರ್‌ಗಳು ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ಟ್ಯಾಗ್ ಮಾಡುವ ಮೊದಲು ಕೇಳುತ್ತಾರೆ. ನಕ್ಷೆಯಲ್ಲಿ ಏನು ಕಾಣಬೇಕು ಎಂಬುದನ್ನು ನೀವು ನಿರ್ಧರಿಸುತ್ತೀರಿ.","உங்கள் கடையைக் குறிக்கும் முன் படைப்பாளர்கள் கேட்கிறார்கள். வரைபடத்தில் எது தெரிய வேண்டும் என்பதை நீங்கள் தீர்மானிக்கிறீர்கள்.","క్రియేటర్లు మీ దుకాణాన్ని ట్యాగ్ చేసే ముందు అడుగుతారు. మ్యాప్‌లో ఏది కనిపించాలో మీరే నిర్ణయిస్తారు.","ক্রিয়েটররা আপনার দোকান ট্যাগ করার আগে জিজ্ঞাসা করেন। মানচিত্রে কী দেখাবে তা আপনি ঠিক করেন।","क्रिएटर तुमचे दुकान टॅग करण्यापूर्वी विचारतात. नकाशावर काय दिसावे ते तुम्ही ठरवता."],
+"Waiting for you ({0})":["आपके जवाब का इंतज़ार ({0})","ನಿಮಗಾಗಿ ಕಾಯುತ್ತಿವೆ ({0})","உங்களுக்காகக் காத்திருக்கின்றன ({0})","మీ కోసం వేచి ఉన్నాయి ({0})","আপনার অপেক্ষায় ({0})","तुमची वाट पाहत आहेत ({0})"],
+"Approve":["मंज़ूर करें","ಅನುಮೋದಿಸಿ","ஒப்புக்கொள்","ఆమోదించు","অনুমোদন করুন","मंजूर करा"],
+"Decline":["अस्वीकार करें","ತಿರಸ್ಕರಿಸಿ","நிராகரி","తిరస్కరించు","প্রত্যাখ্যান করুন","नाकारा"],
+"Nothing waiting.":["कुछ भी बाकी नहीं।","ಏನೂ ಬಾಕಿ ಇಲ್ಲ.","எதுவும் காத்திருக்கவில்லை.","ఏదీ వేచి లేదు.","কিছু অপেক্ষায় নেই।","काहीही प्रलंबित नाही."],
+"Approved ({0})":["मंज़ूर ({0})","ಅನುಮೋದಿತ ({0})","ஒப்புக்கொள்ளப்பட்டவை ({0})","ఆమోదించినవి ({0})","অনুমোদিত ({0})","मंजूर ({0})"],
+"What customers want":["ग्राहक क्या चाहते हैं","ಗ್ರಾಹಕರು ಏನು ಬಯಸುತ್ತಾರೆ","வாடிக்கையாளர்கள் என்ன விரும்புகிறார்கள்","కస్టమర్లు ఏమి కోరుతున్నారు","ক্রেতারা কী চান","ग्राहकांना काय हवे"],
+"Tap the ones you can stock tomorrow.":["जो कल रख सकते हैं उन पर टैप करें।","ನಾಳೆ ಸ್ಟಾಕ್ ಮಾಡಬಹುದಾದವುಗಳನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ.","நாளை வாங்கி வைக்கக்கூடியவற்றைத் தட்டுங்கள்.","రేపు స్టాక్ చేయగలవాటిని నొక్కండి.","যেগুলো কাল স্টক করতে পারবেন সেগুলোতে ট্যাপ করুন।","उद्या ठेवू शकता त्यावर टॅप करा."],
+"{0} people asked":["{0} लोगों ने माँगा","{0} ಜನ ಕೇಳಿದ್ದಾರೆ","{0} பேர் கேட்டனர்","{0} మంది అడిగారు","{0} জন চেয়েছেন","{0} जणांनी मागितले"],
+"I stock this":["मेरे पास है","ನನ್ನ ಬಳಿ ಇದೆ","என்னிடம் உள்ளது","నా దగ్గర ఉంది","আমার কাছে আছে","माझ्याकडे आहे"],
+"I can stock":["रख सकते हैं","ನಾನು ಸ್ಟಾಕ್ ಮಾಡಬಲ್ಲೆ","நான் வாங்கி வைக்க முடியும்","నేను స్టాక్ చేయగలను","আমি স্টক করতে পারি","ठेवता येईल"],
+"Reserve at {0}":["{0} पर आरक्षित करें","{0} ನಲ್ಲಿ ಕಾಯ್ದಿರಿಸಿ","{0} இல் முன்பதிவு","{0} వద్ద రిజర్వ్ చేయండి","{0}-এ রিজার্ভ করুন","{0} येथे राखून ठेवा"],
+"Pay by UPI at the stall. No delivery fee, no commission.":["दुकान पर UPI से भुगतान करें। कोई डिलीवरी शुल्क या कमीशन नहीं।","ಅಂಗಡಿಯಲ್ಲಿ UPI ಮೂಲಕ ಪಾವತಿಸಿ. ಡೆಲಿವರಿ ಶುಲ್ಕ ಇಲ್ಲ, ಕಮಿಷನ್ ಇಲ್ಲ.","கடையில் UPI மூலம் செலுத்துங்கள். டெலிவரி கட்டணம் இல்லை, கமிஷன் இல்லை.","దుకాణంలో UPI తో చెల్లించండి. డెలివరీ ఛార్జీ లేదు, కమిషన్ లేదు.","দোকানে UPI-তে দিন। ডেলিভারি ফি নেই, কমিশন নেই।","दुकानात UPI ने पैसे द्या. डिलिव्हरी शुल्क नाही, कमिशन नाही."],
+"Show this code at {0}":["यह कोड {0} पर दिखाएँ","ಈ ಕೋಡ್ ಅನ್ನು {0} ನಲ್ಲಿ ತೋರಿಸಿ","இந்தக் குறியீட்டை {0} இல் காட்டுங்கள்","ఈ కోడ్‌ను {0} వద్ద చూపించండి","এই কোডটি {0}-এ দেখান","हा कोड {0} येथे दाखवा"],
+"Done":["हो गया","ಮುಗಿದಿದೆ","முடிந்தது","పూర్తయింది","হয়েছে","झाले"]
+};
+TT["The Explorer"]=TT["Explorer"];TT["The Rescuer"]=TT["Rescuer"];
+function tx(s,a){var r=s,z=TT[s];if(z&&st.lang!=="en"&&z[LI[st.lang]])r=z[LI[st.lang]];return a?r.replace(/\{(\d)\}/g,function(_,i){return a[i]}):r}
+
+var ph=function(v,w,h){return IMG[v.id]?'<img class="ph" style="width:'+w+'px;height:'+h+'px;flex:none" src="'+IMG[v.id]+'" alt="'+e(v.n)+'">':'<div class="ph0" style="width:'+w+'px;height:'+h+'px;flex:none">'+e(v.n[0])+'</div>'};
+var bd=function(v){var a=ST[v.s];return '<span class="badge" style="background:'+a[1]+'">'+tx(a[0])+'</span>'};
+var match=function(v){var q=st.q.trim().toLowerCase(),c=CAT[v.c][0],t=(v.n+" "+v.it.map(function(i){return i[0]}).join(" ")+" "+c+" "+tx(c)).toLowerCase();return(st.f==="all"||v.c===st.f)&&(!q||t.indexOf(q)>-1)};
+var AV={x:'<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#F5D9C8"/><path d="M12 58c2-14 10-18 20-18s18 4 20 18z" fill="#C4707F"/><circle cx="32" cy="29" r="10" fill="#E3A57F"/><path d="M20 26c0-9 6-13 12-13s12 4 12 13z" fill="#0A2160"/><rect x="17" y="24" width="30" height="4" rx="2" fill="#0A2160"/><circle cx="28" cy="31" r="1.3" fill="#2E1D17"/><circle cx="36" cy="31" r="1.3" fill="#2E1D17"/><path d="M28 35q4 3 8 0" stroke="#2E1D17" fill="none" stroke-width="1.5"/><path d="M51 6a5 5 0 0 1 5 5c0 4-5 8-5 8s-5-4-5-8a5 5 0 0 1 5-5z" fill="#F2A62E"/><circle cx="51" cy="11" r="1.8" fill="#fff"/></svg>',
+v:'<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#E2E6C9"/><path d="M8 60c0-18 9-26 24-26s24 8 24 26z" fill="#C4707F"/><path d="M20 60c1-9 5-14 12-14s11 5 12 14z" fill="#8A9A5E"/><circle cx="32" cy="28" r="10" fill="#C98E69"/><path d="M21 25c0-8 5-11 11-11s11 3 11 11c-3-4-8-5-11-5s-8 1-11 5z" fill="#2E1D17"/><path d="M25 33q3-2 7 0 4-2 7 0-3 3-7 1-4 2-7-1z" fill="#2E1D17"/><circle cx="28" cy="28" r="1.3" fill="#2E1D17"/><circle cx="36" cy="28" r="1.3" fill="#2E1D17"/><rect x="42" y="46" width="9" height="9" rx="1" fill="#fff"/><path d="M44 48h2v2h-2zM47 51h2v2h-2zM44 52h1v1h-1z" fill="#2E1D17"/><path d="M13 32l7 5-3 4z" fill="#F2A62E"/></svg>'};
+var IC={map:'<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',route:'<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',tag:'<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5"/>',chat:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',camera:'<path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/>',store:'<path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5"/><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05"/><path d="M3.5 7 5.4 3.4A2 2 0 0 1 7 2h10a2 2 0 0 1 1.6.9L20.5 7a2.5 2.5 0 0 1-5 .5 2.5 2.5 0 0 1-3.5 0 2.5 2.5 0 0 1-3.5 0 2.5 2.5 0 0 1-5-.5z"/>',sliders:'<path d="M10 5H3M12 19H3M14 3v4M16 17v4M21 12h-9M21 19h-5M21 5h-7M8 10v4M8 12H3"/>',heart:'<path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/>'};
+var ic=function(n,f){return '<svg viewBox="0 0 24 24" width="22" height="22" fill="'+(f?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>'};
+function applyTheme(){var d=document.documentElement;if(st.theme==="system")d.removeAttribute("data-theme");else d.setAttribute("data-theme",st.theme);d.lang=st.lang}
+function pst(){try{var j=vend("jatin");localStorage.setItem("cs",JSON.stringify({done:st.done,lang:st.lang,theme:st.theme,saved:st.saved,notif:st.notif,role:st.role,res:st.res,stall:{n:j.n,c:j.c,it:j.it}}))}catch(_){}}
+function saveStall(){var n=$("#sn");if(!n)return;var j=vend("jatin"),nm=n.value.trim(),its=$("#sp0").value.split(",").map(function(q){var m=q.trim().match(/^(.*?)[\s\u20b9]*(\d+)$/);return m?[m[1].trim(),+m[2]]:null}).filter(Boolean);if(nm)j.n=nm;j.c=$("#sc").value;if(its.length)j.it=its}
+function langSel(){return '<select class="in" data-i="lang" aria-label="'+tx("Language")+'">'+LG.map(function(l){return '<option value="'+l[0]+'"'+(st.lang===l[0]?" selected":"")+'>'+l[1]+'</option>'}).join("")+'</select>'}
+function themeBtns(){return '<div class="tg">'+[["light","Light"],["dark","Dark"],["system","System"]].map(function(t){return '<button class="chip'+(st.theme===t[0]?" on":"")+'" data-a="th" data-id="'+t[0]+'">'+tx(t[1])+'</button>'}).join("")+'</div>'}
+function hero(){var x=st.role==="x";return '<div class="hero">'+AV[st.role]+'<div><b>'+tx(x?"The Explorer":"The Rescuer")+'</b><div class="mute">'+tx(x?"Discover stalls, products and creators":"Run your stall, on your terms")+'</div></div></div>'}
+function onb(){var r=st.role,j=vend("jatin");return '<div class="scroll" style="padding-top:16px"><h1 style="font-size:24px">'+tx("Welcome to Church Street")+'</h1><p class="mute">'+tx("Pick who you are. You can switch any time.")+'</p><div class="two">'+["x","v"].map(function(k){return '<button class="arch'+(r===k?" on":"")+'" data-a="role" data-id="'+k+'"><span class="big">'+AV[k]+'</span><b>'+tx(k==="x"?"The Explorer":"The Rescuer")+'</b><span class="mute">'+tx(k==="x"?"I discover stalls and products":"I run a stall")+'</span></button>'}).join("")+'</div><label class="lb">'+tx("Language")+'</label>'+langSel()+'<label class="lb">'+tx("Appearance")+'</label>'+themeBtns()+(r==="v"?'<div class="card" style="margin-top:12px"><b>'+tx("Your stall")+'</b><label class="lb">'+tx("Stall name")+'</label><input class="in" id="sn" value="'+e(j.n)+'"><label class="lb">'+tx("What you sell")+'</label><select class="in" id="sc">'+Object.keys(CAT).map(function(c){return '<option value="'+c+'"'+(j.c===c?" selected":"")+'>'+tx(CAT[c][0])+'</option>'}).join("")+'</select><label class="lb">'+tx("Products and prices")+'</label><input class="in" id="sp0" placeholder="Earrings 120, Chain 180" value="'+e(j.it.map(function(i){return i[0]+" "+i[1]}).join(", "))+'"></div>':'')+'<button class="btn" style="width:100%;margin-top:12px" data-a="go2">'+tx("Start")+'</button></div>'}
+function set(){var n=st.notif,L=[["open","Saved stalls open"],["deals","Deals near me"],["tags","New creator tags"],["demand","Demand matches"]];return '<div class="scroll"><h2 style="font-size:20px">'+tx("Settings")+'</h2><label class="lb">'+tx("Language")+'</label>'+langSel()+'<label class="lb">'+tx("Appearance")+'</label>'+themeBtns()+'<label class="lb">'+tx("Notifications")+'</label>'+L.map(function(l){return '<div class="sw'+(n[l[0]]?" on":"")+'" data-a="nt" data-id="'+l[0]+'"><span>'+tx(l[1])+'</span><i></i></div>'}).join("")+'<p class="mute">'+tx("Saved on this device. Real alerts need a backend and a push service.")+'</p><label class="lb">'+tx("Saved vendors")+'</label>'+(st.saved.map(function(id){var v=vend(id);return '<div class="card row"><b>'+e(v.n)+'</b><button class="btn g" data-a="go" data-id="'+id+'">'+tx("View")+'</button></div>'}).join("")||'<div class="card mute">'+tx("Tap the heart on a stall to save it.")+'</div>')+'<label class="lb">'+tx("Order history")+'</label>'+(st.res.map(function(r){return '<div class="card row"><div><b>'+e(vend(r.v).n)+'</b><div class="mute">'+e(r.lines)+' \u00b7 \u20b9'+r.total+' \u00b7 '+r.code+'</div></div><span class="badge" style="background:'+(r.done?"#2f7d4f":"#6b6b73")+'">'+tx(r.done?"Collected":"Reserved")+'</span></div>'}).join("")||'<div class="card mute">'+tx("No orders yet.")+'</div>')+'<button class="btn g" data-a="rso">'+tx("Redo setup")+'</button></div>'}
+function svg(){var s='<svg viewBox="0 0 360 520" role="img" aria-label="'+tx("Map of Church Street")+'"><rect width="360" height="520" fill="var(--blk)"/><rect x="250" y="95" width="90" height="70" rx="10" fill="var(--park)"/><rect x="10" y="300" width="80" height="90" rx="10" fill="var(--park)"/><g stroke="var(--road)" fill="none" stroke-linecap="round"><path d="M0 58H360" stroke-width="16"/><path d="M0 230L360 175" stroke-width="9"/><path d="M0 495L360 460" stroke-width="12"/><path d="M20 20L110 500" stroke-width="8"/><path d="M70 80L290 470" stroke-width="18"/></g>'+(st.sat&&MAP.sat?'<image href="'+MAP.sat+'" width="360" height="520" preserveAspectRatio="xMidYMid slice"/>':'')+'<g font-size="9" fill="'+(st.sat&&MAP.sat?'#fff':'var(--mute)')+'" font-family="Outfit,sans-serif"><text x="12" y="40">MG Road</text><text x="244" y="186" transform="rotate(-9 244 186)">Rest House Rd</text><text x="12" y="488">St. Marks Road</text><text x="170" y="116" font-weight="700" font-size="11" fill="var(--ink)" transform="rotate(61 170 116)">CHURCH STREET</text>';
+[["Coco\u2019s",122,150],["Kling Brewery",196,272],["Bookshop",250,336]].forEach(function(p){s+='<rect x="'+(p[1]-6)+'" y="'+(p[2]-6)+'" width="12" height="12" rx="3" fill="var(--card)" stroke="var(--mute)"/><text x="'+(p[1]+9)+'" y="'+(p[2]+3)+'" font-size="8">'+p[0]+'</text>'});
+s+='</g>';
+V.forEach(function(v){var col=v.s==="closed"?"#9a9a94":CAT[v.c][1];s+='<g class="pin'+(match(v)?"":" dim")+'" data-a="pin" data-id="'+v.id+'" transform="translate('+v.x+' '+v.y+')">'+(st.sel===v.id?'<circle r="20" fill="'+col+'" opacity=".3"/>':'')+'<path d="M0 0C-9-10-11-16-11-21A11 11 0 1 1 11-21C11-16 9-10 0 0Z" fill="'+col+'" stroke="#fff" stroke-width="2"/><circle cy="-21" r="4" fill="#fff"/><circle cx="9" cy="-30" r="3.5" fill="'+ST[v.s][1]+'" stroke="#fff" stroke-width="1.2"/>'+(appr(v.id)?'<g class="cp" data-a="post" data-id="'+appr(v.id).id+'" transform="translate(-13 -31)"><circle r="8.5" fill="#fff" stroke="#F2A62E" stroke-width="1.5"/><rect x="-4" y="-2.6" width="8" height="6" rx="1.2" fill="#F2A62E"/><circle cy=".4" r="1.6" fill="#fff"/></g>':'')+'</g>'});
+return s+'</svg>'}
+function redraw(){var ms=$("#ms");if(!ms)return;ms.innerHTML='<div style="padding-bottom:'+(st.sel?340:0)+'px">'+svg()+'</div>';var n=V.filter(match).length;$("#cnt").textContent=tx("{0} of {1} stalls match",[n,V.length])+(st.sat&&!MAP.sat?" \u00b7 "+tx("Satellite image not set up"):"");sheet();if(st.sel){ms.scrollTop=Math.max(0,vend(st.sel).y*ms.clientWidth/360-120)}}
+function sheet(){var el=$("#sh");if(!el)return;if(!st.sel){el.className="sheet";return}var v=vend(st.sel),pc=appr(v.id);
+el.innerHTML='<div class="row" style="align-items:flex-start"><div style="display:flex;gap:12px;min-width:0">'+ph(v,96,96)+'<div><h3 style="font-size:16px">'+e(v.n)+'</h3>'+bd(v)+'<div class="mute" style="margin-top:6px">'+tx(CAT[v.c][0])+'</div></div></div><button class="x" data-a="cl" aria-label="'+tx("Close")+'">\u00d7</button></div><div class="kv"><span>'+tx("Sells")+'</span><span>'+v.it.map(function(i){return '<span class="chip" style="display:inline-block;margin:0 4px 4px 0;cursor:default">'+e(i[0])+' \u20b9'+i[1]+'</span>'}).join("")+'</span><span>'+tx("Spot it")+'</span><span>'+e(v.d)+'</span><span>'+tx("Languages")+'</span><span>'+v.l.split(", ").map(function(l){return tx(l)}).join(", ")+'</span><span>'+tx("Pay")+'</span><span>'+tx(v.u)+'</span></div><div class="row" style="justify-content:flex-start;flex-wrap:wrap"><button class="btn" data-a="rs" data-id="'+v.id+'"'+(v.s==="closed"?" disabled":"")+'>'+tx("Reserve &amp; collect")+'</button><button class="btn g" data-a="sv" data-id="'+v.id+'" aria-label="'+tx("Save vendor")+'">'+ic("heart",st.saved.indexOf(v.id)>-1)+'</button>'+(pc?'<button class="btn g" data-a="post" data-id="'+pc.id+'">'+tx("Creator post")+'</button>':'')+'</div>';el.className="sheet show"}
+function xmap(){return '<div style="padding:0 14px"><input class="in" id="q" data-i="q" placeholder="'+tx("Search a product, e.g. claw clips")+'" value="'+e(st.q)+'"></div><div class="chips">'+[["all","All"],["snacks","Snacks"],["fruit","Fruit"],["accessories","Accessories"],["clothing","Clothing"]].map(function(c){return '<button class="chip'+(st.f===c[0]?" on":"")+'" data-a="f" data-id="'+c[0]+'">'+tx(c[1])+'</button>'}).join("")+'</div><div class="row" style="padding:0 14px 6px"><span class="mute" id="cnt"></span><button class="chip'+(st.sat?" on":"")+'" data-a="sat">'+tx("Satellite")+'</button></div><div class="mw"><div id="ms"></div><div class="sheet" id="sh"></div></div>'}
+function trail(){var n=st.stamps.length;return '<div class="scroll"><h2 style="font-size:20px">'+tx("Vendor Trail")+'</h2><p class="mute">'+tx("Coco\u2019s caf\u00e9 \u2192 three stalls \u2192 the bookshop. Check in at each stall to collect a stamp.")+'</p><div class="card"><div class="row"><b>'+tx("{0} of 3 stamps",[n])+'</b><span class="mute">'+tx("Reward at 3")+'</span></div><div class="bar2" style="margin:8px 0"><i style="width:'+(n/3*100)+'%"></i></div>'+(n>=3?'<b>'+tx("Unlocked: \u20b930 off at Ravi\u2019s Chai &amp; Buns")+'</b><div class="mute">'+tx("Funded together by trail vendors (sample reward)")+'</div>':'<span class="mute">'+tx("Visit all three stalls to unlock a vendor-funded reward.")+'</span>')+'</div>'+TR.map(function(id,i){var v=vend(id),on=st.stamps.indexOf(id)>-1;return '<div class="card row"><div style="display:flex;gap:10px;align-items:center">'+ph(v,56,56)+'<div><b>'+(i+1)+'. '+e(v.n)+'</b><div class="mute">'+e(v.d.split(".")[0])+'</div></div></div>'+(on?'<div class="st on">\u2713</div>':'<button class="btn" data-a="ck" data-id="'+id+'">'+tx("Check in")+'</button>')+'</div>'}).join("")+'<button class="btn g" data-a="rst">'+tx("Reset stamps")+'</button></div>'}
+function deals(){return '<div class="scroll"><h2 style="font-size:20px">'+tx("End-of-day deals")+'</h2><p class="mute">'+tx("Leftover stock at a discount, posted by vendors. Reserve it and collect at the stall.")+'</p>'+(st.D.filter(function(d){return d.q>0}).map(function(d){var v=vend(d.v),k=st.D.indexOf(d);return '<div class="card"><div class="row"><div><b>'+e(d.i)+'</b><div class="mute">'+e(v.n)+' \u00b7 '+tx("until {0}",[e(d.t)])+'</div></div><div style="text-align:right"><s class="mute">\u20b9'+d.o+'</s> <b style="font-size:18px">\u20b9'+d.d+'</b></div></div><div class="row" style="margin-top:10px"><span class="mute">'+tx("{0} left",[d.q])+'</span><button class="btn" data-a="rd" data-id="'+k+'">'+tx("Reserve")+'</button></div></div>'}).join("")||'<div class="card mute">'+tx("No deals right now.")+'</div>')+'</div>'}
+function ask(){return '<div class="scroll"><h2 style="font-size:20px">'+tx("Demand board")+'</h2><p class="mute">'+tx("Can\u2019t find something? Ask. Vendors see it and can stock it.")+'</p><div class="row" style="margin-bottom:10px"><input class="in" id="rq" placeholder="'+tx("I am looking for...")+'"><button class="btn" data-a="ar">'+tx("Post")+'</button></div>'+st.reqs.map(function(r,i){return '<div class="card row"><div><b>'+e(r.t)+'</b>'+(r.by?'<div style="margin-top:4px"><span class="badge" style="background:#2f7d4f">'+tx("Stocked by {0}",[e(vend(r.by).n)])+'</span></div>':'')+'</div><button class="btn g" data-a="me" data-id="'+i+'">+1 \u00b7 '+r.n+'</button></div>'}).join("")+'</div>'}
+function pcard(p){var v=vend(p.v);return (IMG[v.id]?'<img class="ph" style="width:100%;height:170px" src="'+IMG[v.id]+'" alt="'+e(v.n)+'">':'')+'<div style="margin-top:8px"><b>'+e(p.h)+'</b><div>'+e(p.c)+'</div><button class="btn g" style="margin-top:8px" data-a="go" data-id="'+v.id+'">'+tx("Find {0} on the map",[e(v.n)])+'</button></div>'}
+function cr(){return '<div class="scroll"><h2 style="font-size:20px">'+tx("Creators")+'</h2><p class="mute">'+tx("Posts tagged to stalls. Only tags the vendor approved show up here.")+'</p>'+st.P.filter(function(p){return p.s==="ok"}).map(function(p){return '<div class="card">'+pcard(p)+'</div>'}).join("")+'</div>'}
+function stall(){var v=vend("jatin"),os=st.res.filter(function(r){return r.v==="jatin"&&!r.done});return '<div class="scroll"><div class="row" style="justify-content:flex-start;gap:12px;margin:6px 0 12px">'+ph(v,64,64)+'<div><h2 style="font-size:20px">'+e(v.n)+'</h2><div class="mute">'+tx("You control your status and how your stall appears")+'</div></div></div><b>'+tx("Status")+'</b>'+Object.keys(ST).map(function(k){return '<button class="opt'+(v.s===k?" on":"")+'" data-a="ss" data-id="'+k+'">'+tx(ST[k][0])+'</button>'}).join("")+'<div class="card" style="margin-top:12px"><b>'+tx("Post end-of-day surplus")+'</b><div class="row" style="margin:8px 0"><input class="in" id="si" placeholder="'+tx("Item")+'"><input class="in" id="sp" placeholder="\u20b9" style="width:80px" inputmode="numeric"></div><button class="btn" data-a="sp">'+tx("Post deal")+'</button></div><b>'+tx("Reservations ({0})",[os.length])+'</b>'+(os.map(function(r){return '<div class="card row"><div><b>'+r.code+'</b><div class="mute">'+e(r.lines)+' \u00b7 \u20b9'+r.total+'</div></div><button class="btn g" data-a="rc" data-id="'+st.res.indexOf(r)+'">'+tx("Collected")+'</button></div>'}).join("")||'<div class="card mute">'+tx("No reservations yet. Try reserving from the Explorer side.")+'</div>')+'</div>'}
+function tags(){var j=function(s){return st.P.filter(function(p){return p.v==="jatin"&&p.s===s})};return '<div class="scroll"><h2 style="font-size:20px">'+tx("Creator tags")+'</h2><p class="mute">'+tx("Creators ask before tagging your stall. You decide what appears on the map.")+'</p><b>'+tx("Waiting for you ({0})",[j("pend").length])+'</b>'+(j("pend").map(function(p){return '<div class="card">'+(IMG.jatin?'<img class="ph" style="width:100%;height:120px" src="'+IMG.jatin+'" alt="">':'')+'<div style="margin:8px 0"><b>'+e(p.h)+'</b><div>'+e(p.c)+'</div></div><div class="row" style="justify-content:flex-start"><button class="btn" data-a="ap" data-id="'+p.id+'">'+tx("Approve")+'</button><button class="btn g" data-a="dn" data-id="'+p.id+'">'+tx("Decline")+'</button></div></div>'}).join("")||'<div class="card mute">'+tx("Nothing waiting.")+'</div>')+'<b>'+tx("Approved ({0})",[j("ok").length])+'</b>'+j("ok").map(function(p){return '<div class="card"><b>'+e(p.h)+'</b><div class="mute">'+e(p.c)+'</div></div>'}).join("")+'</div>'}
+function dem(){return '<div class="scroll"><h2 style="font-size:20px">'+tx("What customers want")+'</h2><p class="mute">'+tx("Tap the ones you can stock tomorrow.")+'</p>'+st.reqs.map(function(r,i){var on=r.by==="jatin";return '<div class="card row"><div><b>'+e(r.t)+'</b><div class="mute">'+tx("{0} people asked",[r.n])+'</div></div><button class="btn'+(on?"":" g")+'" data-a="sk" data-id="'+i+'">'+tx(on?"I stock this":"I can stock")+'</button></div>'}).join("")+'</div>'}
+function modal(){var m=st.mod;if(!m)return"";var h,x='<button class="x" data-a="mx" aria-label="'+tx("Close")+'">\u00d7</button>';
+if(m.k==="post"){var p=st.P.filter(function(x){return x.id==m.id})[0];h='<div class="row"><b>'+tx("Creator post")+'</b>'+x+'</div>'+pcard(p)}
+else if(m.k==="res"){var its=m.items,t=0;its.forEach(function(it,i){t+=it[1]*(st.qty[i]||0)});h='<div class="row"><b>'+tx("Reserve at {0}",[e(vend(m.v).n)])+'</b>'+x+'</div><p class="mute">'+tx("Pay by UPI at the stall. No delivery fee, no commission.")+'</p>'+its.map(function(it,i){return '<div class="row card"><div><b>'+e(it[0])+'</b><div class="mute">\u20b9'+it[1]+'</div></div><div class="q"><button data-a="qy" data-id="'+i+'" data-d="-1">\u2212</button><b>'+(st.qty[i]||0)+'</b><button data-a="qy" data-id="'+i+'" data-d="1">+</button></div></div>'}).join("")+'<button class="btn" style="width:100%" data-a="cf"'+(t?"":" disabled")+'>'+tx("Reserve")+' \u00b7 \u20b9'+t+'</button>'}
+else{h='<div class="row"><b>'+tx("Reserved")+'</b>'+x+'</div><div class="card" style="text-align:center"><div class="mute">'+tx("Show this code at {0}",[e(vend(m.r.v).n)])+'</div><div class="h" style="font-size:34px;margin:6px 0">'+m.r.code+'</div><div>'+e(m.r.lines)+' \u00b7 \u20b9'+m.r.total+'</div></div><button class="btn" style="width:100%" data-a="mx">'+tx("Done")+'</button>'}
+return '<div class="mod"><div class="mc">'+h+'</div></div>'}
+function rd(){applyTheme();var A=$("#app"),x=st.role==="x";A.dataset.role=st.role;
+if(!st.done){A.innerHTML=onb();return}
+var N=x?[["map","map","Map"],["trail","route","Trail"],["deals","tag","Deals"],["ask","chat","Ask"],["cr","camera","Creators"]]:[["stall","store","My stall"],["tags","camera","Tags"],["dem","chat","Demand"]];
+var pend=st.P.filter(function(p){return p.v==="jatin"&&p.s==="pend"}).length,F={map:xmap,trail:trail,deals:deals,ask:ask,cr:cr,stall:stall,tags:tags,dem:dem,set:set};
+A.innerHTML='<div class="bar"><span class="logo">'+tx("Church Street")+'</span><div class="seg">'+["x","v"].map(function(r){return '<button class="'+(st.role===r?"on":"")+'" data-a="role" data-id="'+r+'">'+AV[r]+tx(r==="x"?"Explorer":"Rescuer")+'</button>'}).join("")+'</div><button class="gear" data-a="tab" data-id="set" aria-label="'+tx("Settings")+'">'+ic("sliders")+'</button></div>'+hero()+'<div class="body">'+F[st.tab]()+modal()+'</div><div class="nav">'+N.map(function(n){return '<button class="'+(st.tab===n[0]?"on":"")+'" data-a="tab" data-id="'+n[0]+'"><span class="pill">'+ic(n[1])+'</span>'+tx(n[2])+(n[0]==="tags"&&pend?'<span class="n">'+pend+'</span>':'')+'</button>'}).join("")+'</div>';
+if(st.tab==="map")redraw()}
+document.addEventListener("click",function(ev){var t=ev.target.closest("[data-a]");if(!t)return;var a=t.dataset.a,id=t.dataset.id,v;
+if(!st.done)saveStall();
+if(a==="role"){st.role=id;st.tab=id==="x"?"map":"stall";st.mod=null;st.sel=null}
+else if(a==="tab"){st.tab=id;st.mod=null}
+else if(a==="f"){st.f=id}
+else if(a==="pin"){st.sel=id}
+else if(a==="cl"){st.sel=null}
+else if(a==="post"){st.mod={k:"post",id:id}}
+else if(a==="mx"){st.mod=null}
+else if(a==="go"){st.mod=null;st.tab="map";st.sel=id}
+else if(a==="rs"){st.qty=[];st.mod={k:"res",v:id,items:vend(id).it}}
+else if(a==="rd"){var d=st.D[id];st.qty=[1];st.mod={k:"res",v:d.v,items:[[d.i,d.d]],deal:+id}}
+else if(a==="qy"){st.qty[id]=Math.max(0,(st.qty[id]||0)+(+t.dataset.d))}
+else if(a==="cf"){var m=st.mod,ls=[],tt=0;m.items.forEach(function(it,i){var q=st.qty[i]||0;if(q){ls.push(q+"\u00d7 "+it[0]);tt+=q*it[1]}});var r={v:m.v,lines:ls.join(", "),total:tt,code:"CS-"+(100+Math.floor(Math.random()*900)),done:false};st.res.push(r);if(m.deal!=null)st.D[m.deal].q-=1;st.mod={k:"ok",r:r}}
+else if(a==="ck"){if(st.stamps.indexOf(id)<0)st.stamps.push(id)}
+else if(a==="rst"){st.stamps=[]}
+else if(a==="ar"){var iv=$("#rq").value.trim();if(iv)st.reqs.unshift({t:iv,n:1})}
+else if(a==="me"){st.reqs[id].n++}
+else if(a==="ss"){vend("jatin").s=id}
+else if(a==="sp"&&t.tagName==="BUTTON"){var n1=$("#si").value.trim(),p1=+$("#sp").value;if(n1&&p1>0)st.D.unshift({v:"jatin",i:n1,o:Math.round(p1*1.6),d:p1,q:5,t:"9 pm"})}
+else if(a==="rc"){st.res[id].done=true}
+else if(a==="ap"||a==="dn"){var pp=st.P.filter(function(x){return x.id==id})[0];if(a==="ap")pp.s="ok";else st.P.splice(st.P.indexOf(pp),1)}
+else if(a==="sk"){var rq=st.reqs[id];rq.by=rq.by?"":"jatin"}
+else if(a==="sat"){st.sat=!st.sat}
+else if(a==="sv"){var ix=st.saved.indexOf(id);if(ix>-1)st.saved.splice(ix,1);else st.saved.push(id)}
+else if(a==="th"){st.theme=id}
+else if(a==="nt"){st.notif[id]=st.notif[id]?0:1}
+else if(a==="rso"){st.done=false}
+else if(a==="go2"){st.done=true;st.tab=st.role==="x"?"map":"stall"}
+pst();rd()});
+document.addEventListener("input",function(ev){var i=ev.target.dataset.i;if(i==="q"){st.q=ev.target.value;redraw()}else if(i==="lang"){saveStall();st.lang=ev.target.value;pst();rd()}});
+try{var S0=JSON.parse(localStorage.getItem("cs")||"{}");["done","lang","theme","saved","notif","role"].forEach(function(k){if(S0[k]!=null)st[k]=S0[k]});if(S0.res)st.res=S0.res;if(S0.stall){var jv=vend("jatin");jv.n=S0.stall.n;jv.c=S0.stall.c;jv.it=S0.stall.it}}catch(_){}
+st.tab=st.role==="x"?"map":"stall";
+rd();
+</script></body></html>
